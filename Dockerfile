@@ -1,4 +1,4 @@
-FROM python:3-slim
+FROM python:3-alpine
 MAINTAINER Cassio Nunes <cassiopereira.nunes@gmail.com>
 
 ENV INSTALL_PATH /App
