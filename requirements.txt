@@ -16,3 +16,18 @@ gunicorn==19.9.0
 pytest==4.4
 pytest-cov==2.6.1
 flake8==3.7.7
+
+# CLI.
+Click==7.0
+
+# Data and workers.
+redis==3.2.1
+celery==4.3
+
+# Forms.
+Flask-WTF==0.14.2
+WTForms-Components==0.10.4
+
+# Extensions.
+flask-debugtoolbar==0.10.1
+Flask-Mail==0.9.1
