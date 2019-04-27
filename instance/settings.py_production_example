@@ -1,3 +1,10 @@
 DEBUG = False
 
+SERVER_NAME = 'nickjanetakis.com'
 SECRET_KEY = 'generateastrong128chartoken'
+
+MAIL_USERNAME = 'cassiopereira.nunes@gmail.com'
+MAIL_PASSWORD = '@101118grad962'
+
+CELERY_BROKER_URL = 'redis://:amuchmoresecurepassword@redis:6379/0'
+CELERY_RESULT_BACKEND = 'redis://:amuchmoresecurepassword@redis:6379/0'

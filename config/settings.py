@@ -6,11 +6,11 @@ SECRET_KEY = 'insecurekeyfordev'
 # Flask-Mail.
 MAIL_DEFAULT_SENDER = 'contact@local.host'
 MAIL_SERVER = 'smtp.gmail.com'
-MAIL_PORT = 587
-MAIL_USE_TLS = True
-MAIL_USE_SSL = False
-MAIL_USERNAME = 'you@gmail.com'
-MAIL_PASSWORD = 'awesomepassword'
+MAIL_PORT = 465
+# MAIL_USE_TLS = True
+MAIL_USE_SSL = True
+MAIL_USERNAME = 'cassio@oshi.com.br'
+MAIL_PASSWORD = '@101118grad962'
 
 # Celery.
 CELERY_BROKER_URL = 'redis://:devpassword@redis:6379/0'
