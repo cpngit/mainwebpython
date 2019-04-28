@@ -65,12 +65,5 @@ class UpdateCredentials(ModelForm):
                                       ensure_existing_password_matches])
 
     email = StringField('Email Address',
-                        [Optional(), Email(), Length(min=6, max=35)])
+                        [DataRequired(), Email(), Length(min=6, max=35)])
     password = PasswordField('Password', [Optional(), Length(8, 128)])
-
-    if password is not None:
-        def validate_email(self, email):
-            """Email validation."""
-            user = User.query.filter_by(email=email.data).first()
-            if user is not None:
-                raise ValidationError('Please use a different email address.')
