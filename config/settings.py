@@ -9,9 +9,9 @@ SECRET_KEY = 'insecurekeyfordev'
 MAIL_DEFAULT_SENDER = 'contact@local.host'
 MAIL_SERVER = 'smtp.gmail.com'
 MAIL_PORT = 465
-# MAIL_USE_TLS = True
+MAIL_USE_TLS = False
 MAIL_USE_SSL = True
-MAIL_USERNAME = 'cassio@oshi.com.br'
+MAIL_USERNAME = 'cassiopereira.nunes@gmail.com'
 MAIL_PASSWORD = '@101118grad962'
 
 # Celery.
