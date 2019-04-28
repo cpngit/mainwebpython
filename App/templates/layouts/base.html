@@ -38,7 +38,7 @@
     <footer class="footer text-center">
       <div class="container">
         <ul class="list-inline">
-          <li class="text-muted">App &copy; 2016</li>
+          <li class="text-muted">Snake Eyes &copy; 2016</li>
           {% block footer %}{% endblock %}
         </ul>
       </div>
@@ -46,6 +46,12 @@
 
     <script
       src="{{ url_for('static', filename='scripts/vendor/bootstrap.min.js') }}">
+    </script>
+    <script
+      src="{{ url_for('static', filename='scripts/vendor/moment.min.js') }}">
+    </script>
+    <script
+      src="{{ url_for('static', filename='scripts/main.js') }}">
     </script>
   </body>
 </html>

@@ -1,8 +1,10 @@
 
 from flask import Flask
 from celery import Celery
-from itsdangerous import URLSafeTimedSerializer
+import base64
+# from itsdangerous import URLSafeTimedSerializer
 
+from App.blueprints.admin import admin
 from App.blueprints.page import page
 from App.blueprints.contact import contact
 from App.blueprints.user import user
@@ -62,6 +64,7 @@ def create_app(settings_override=None):
     if settings_override:
         app.config.update(settings_override)
 
+    app.register_blueprint(admin)
     app.register_blueprint(page)
     app.register_blueprint(contact)
     app.register_blueprint(user)
