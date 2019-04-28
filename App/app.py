@@ -1,12 +1,23 @@
+
 from flask import Flask
 from celery import Celery
+from itsdangerous import URLSafeTimedSerializer
 
 from App.blueprints.page import page
 from App.blueprints.contact import contact
-from App.extensions import debug_toolbar, mail, csrf
+from App.blueprints.user import user
+from App.blueprints.user.models import User
+from App.extensions import (
+    debug_toolbar,
+    mail,
+    csrf,
+    db,
+    login_manager
+)
 
 CELERY_TASK_LIST = [
     'App.blueprints.contact.tasks',
+    'App.blueprints.user.tasks',
 ]
 
 
@@ -53,7 +64,9 @@ def create_app(settings_override=None):
 
     app.register_blueprint(page)
     app.register_blueprint(contact)
+    app.register_blueprint(user)
     extensions(app)
+    authentication(app, User)
 
     return app
 
@@ -68,5 +81,48 @@ def extensions(app):
     debug_toolbar.init_app(app)
     mail.init_app(app)
     csrf.init_app(app)
+    db.init_app(app)
+    login_manager.init_app(app)
 
     return None
+
+
+def authentication(app, user_model):
+    """
+    Initialize the Flask-Login extension (mutates the app passed in).
+
+    :param app: Flask application instance
+    :param user_model: Model that contains the authentication information
+    :type user_model: SQLAlchemy model
+    :return: None
+    """
+    login_manager.login_view = 'user.login'
+
+    @login_manager.user_loader
+    def load_user(uid):
+        return user_model.query.get(uid)
+
+    @login_manager.request_loader
+    def load_user_from_request(request):
+
+        # first, try to login using the api_key url arg
+        api_key = request.args.get('api_key')
+        if api_key:
+            user = User.query.filter_by(api_key=api_key).first()
+            if user:
+                return user
+
+        # next, try to login using Basic Auth
+        api_key = request.headers.get('Authorization')
+        if api_key:
+            api_key = api_key.replace('Basic ', '', 1)
+            try:
+                api_key = base64.b64decode(api_key)
+            except TypeError:
+                pass
+            user = User.query.filter_by(api_key=api_key).first()
+            if user:
+                return user
+
+        # finally, return None if both methods did not login the user
+        return None
