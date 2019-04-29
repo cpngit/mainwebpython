@@ -15,6 +15,14 @@ MAIL_USE_SSL = True
 MAIL_USERNAME = 'cassiopereira.nunes@gmail.com'
 MAIL_PASSWORD = '@101118grad962'
 
+# Flask-Babel.
+LANGUAGES = {
+    'en': 'English',
+    'kl': 'Klingon',
+    'es': 'Spanish'
+}
+BABEL_DEFAULT_LOCALE = 'en'
+
 # Celery.
 CELERY_BROKER_URL = 'redis://:devpassword@redis:6379/0'
 CELERY_RESULT_BACKEND = 'redis://:devpassword@redis:6379/0'

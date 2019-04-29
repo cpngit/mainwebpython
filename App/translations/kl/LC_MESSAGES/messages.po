@@ -1,0 +1,98 @@
+# Kalaallisut translations for PROJECT.
+# Copyright (C) 2016 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2019-04-29 19:28+0000\n"
+"PO-Revision-Date: 2016-04-26 18:22+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: kl\n"
+"Language-Team: kl <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.6.0\n"
+
+#~ msgid "Stripe publishable key"
+#~ msgstr "Stripe publishable ngaQHa'moHwI'mey"
+
+#~ msgid "Plan"
+#~ msgstr "Nab"
+
+#~ msgid "Do you have a coupon code?"
+#~ msgstr "Coupon ngoq DaHutlh'a'?"
+
+#~ msgid "Name on card"
+#~ msgstr "Chaw' 'oH pong"
+
+#~ msgid "How many coins do you want?"
+#~ msgstr "Coins 'ar DaneH?"
+
+#~ msgid "Enter payment information"
+#~ msgstr "Payment De' 'el"
+
+#~ msgid "Process payment"
+#~ msgstr "MIw payment"
+
+#~ msgid "Update payment information"
+#~ msgstr "Payment De' update"
+
+#~ msgid "Update payment method"
+#~ msgstr "Update payment method"
+
+#~ msgid "subscription"
+#~ msgstr "subscription"
+
+#~ msgid "This plan costs"
+#~ msgstr "Nab costs"
+
+#~ msgid "Purchase coins"
+#~ msgstr "Je' coins"
+
+#~ msgid "You need to enable JavaScript to proceed."
+#~ msgstr "JavaScript ruch enable bImejnIS."
+
+#~ msgid "Card number"
+#~ msgstr "Chaw' mI'"
+
+#~ msgid "Exp. date"
+#~ msgstr "Exp. date"
+
+#~ msgid "Protected by 128-bit SSL encryption"
+#~ msgstr "Qan 128-bit SSL encryption"
+
+#~ msgid "You already have an active subscription."
+#~ msgstr "Subscription pov chonayta' Daghaj."
+
+#~ msgid "Sorry, that plan did not exist."
+#~ msgstr "jIQoS, wej nIv'e' nab."
+
+#~ msgid "Awesome, thanks for subscribing!"
+#~ msgstr "Subscribing awesome, ghIlDeSten!"
+
+#~ msgid "You must enable JavaScript for this request."
+#~ msgstr "JavaScript ghob'e' enable SoH request."
+
+#~ msgid "Your subscription has been updated."
+#~ msgstr "Your subscription has been updated."
+
+#~ msgid "You do not have an active subscription."
+#~ msgstr "Subscription pov wej Daghajchugh."
+
+#~ msgid "Sorry to see you go, your subscription has been cancelled."
+#~ msgstr "JIQoS ghoS qalegh, qIl subscription."
+
+#~ msgid "You do not have a payment method on file."
+#~ msgstr "Payment method not Daghaj teywI'."
+
+#~ msgid "Your payment method has been updated."
+#~ msgstr "Your payment method has been updated."
+
+#~ msgid "%(amount)s coins have been added to your account."
+#~ msgstr "%(amount)s chel coins account."
+

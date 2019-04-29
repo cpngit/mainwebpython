@@ -48,3 +48,4 @@ Faker==1.0.5
 flask-debugtoolbar==0.10.1
 Flask-Mail==0.9.1
 Flask-Login==0.4.1
+Flask-Babel==0.9

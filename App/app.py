@@ -4,8 +4,8 @@ import logging
 from logging.handlers import SMTPHandler
 
 from werkzeug.contrib.fixers import ProxyFix
-
-from flask import Flask, render_template
+from flask_login import current_user
+from flask import Flask, render_template, request
 from celery import Celery
 import base64
 # from itsdangerous import URLSafeTimedSerializer
@@ -20,7 +20,8 @@ from App.extensions import (
     mail,
     csrf,
     db,
-    login_manager
+    login_manager,
+    babel
 )
 
 CELERY_TASK_LIST = [
@@ -81,6 +82,7 @@ def create_app(settings_override=None):
     app.register_blueprint(user)
     extensions(app)
     authentication(app, User)
+    locale(app)
 
     return app
 
@@ -97,6 +99,7 @@ def extensions(app):
     csrf.init_app(app)
     db.init_app(app)
     login_manager.init_app(app)
+    babel.init_app(app)
 
     return None
 
@@ -140,6 +143,22 @@ def authentication(app, user_model):
 
         # finally, return None if both methods did not login the user
         return None
+
+
+def locale(app):
+    """
+    Initialize a locale for the current request.
+
+    :param app: Flask application instance
+    :return: str
+    """
+    @babel.localeselector
+    def get_locale():
+        if current_user.is_authenticated:
+            return current_user.locale
+
+        accept_languages = app.config.get('LANGUAGES').keys()
+        return request.accept_languages.best_match(accept_languages)
 
 
 def middleware(app):
