@@ -21,10 +21,7 @@ services:
   website:
     build: .
     command: >
-      gunicorn -b 0.0.0.0:8000
-        --access-logfile -
-        --reload
-        "App.app:create_app()"
+      gunicorn -c "python:config.gunicorn" --reload "App.app:create_app()"
     env_file:
       - '.env'
     volumes:
