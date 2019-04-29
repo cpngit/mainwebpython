@@ -23,6 +23,9 @@ Click==7.0
 # Data and workers.
 psycopg2==2.8.2
 Flask-SQLAlchemy==2.4.0
+alembic==1.0.10
+redis==3.2.1
+celery==4.3
 
 # Hello. This is Nick from the future (March 2019 to be exact). An emergency
 # addition had to be made below to fix an issue that resulted in SQLAlchemy
@@ -33,9 +36,6 @@ Flask-SQLAlchemy==2.4.0
 # future update video will cover upgrading SQLAlchemy to 1.3.0 and more.
 SQLAlchemy==1.3.3
 SQLAlchemy-Utils==0.33.11
-
-redis==3.2.1
-celery==4.3
 
 # Forms.
 Flask-WTF==0.14.2
