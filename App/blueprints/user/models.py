@@ -129,7 +129,7 @@ class User(UserMixin, ResourceMixin, db.Model):
         :type query: str
         :return: SQLAlchemy filter
         """
-         if query == '':
+        if query == '':
             return text('')
 
         search_query = '%{0}%'.format(query)
@@ -151,11 +151,8 @@ class User(UserMixin, ResourceMixin, db.Model):
         :type new_active: bool
         :return: bool
         """
-        is_changing_roles = user.role == 'admin' and new_role != 'admin'
-        is_changing_active = user.active is True and new_active is None
-
         is_demoting_admin = user.role == 'admin' and new_role != 'admin'
-        is_changin_active - user.active is True and new_active is None
+        is_changing_active = user.active is True and new_active is None
         admin_count = User.query.filter(User.role == 'admin').count()
 
         if is_demoting_admin and admin_count == 1:

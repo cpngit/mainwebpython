@@ -6,8 +6,8 @@ from wtforms_components import EmailField, Email
 
 from config.settings import LANGUAGES
 from lib.util_wtforms import ModelForm, choices_from_dict
-from snakeeyes.blueprints.user.models import User
-from snakeeyes.blueprints.user.validations import ensure_identity_exists, \
+from App.blueprints.user.models import User
+from App.blueprints.user.validations import ensure_identity_exists, \
     ensure_existing_password_matches
 
 

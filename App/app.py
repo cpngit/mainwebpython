@@ -3,7 +3,7 @@ import logging
 
 from logging.handlers import SMTPHandler
 
-from werkzeug.middleware.ProxyFix import ProxyFix
+from werkzeug.middleware.proxy_fix import ProxyFix
 from werkzeug.debug import DebuggedApplication
 from flask_login import current_user
 from flask import Flask, render_template, request
@@ -63,7 +63,7 @@ def create_app(settings_override=None):
     :param settings_override: Override settings
     :return: Flask app
     """
-   app = Flask(__name__, static_folder='../public', static_url_path='')
+    app = Flask(__name__, static_folder='../public', static_url_path='')
 
     app.config.from_object('config.settings')
 
@@ -83,7 +83,7 @@ def create_app(settings_override=None):
     authentication(app, User)
     locale(app)
 
-    if debug:
+    if app.debug:
         app.wsgi_app = DebuggedApplication(app.wsgi_app)
 
     return app

@@ -20,7 +20,7 @@ from App.blueprints.user.forms import (
     PasswordResetForm,
     SignupForm,
     WelcomeForm,
-    UpdateCredentials,
+    UpdateCredentialsForm,
     UpdateLocaleForm)
 
 user = Blueprint('user', __name__, template_folder='templates')
