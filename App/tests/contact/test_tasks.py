@@ -7,7 +7,7 @@ class TestTasks(object):
         """ Deliver a contact email. """
         form = {
           'email': 'foo@bar.com',
-          'message': 'Test message from Snake Eyes.'
+          'message': 'Test message from COMAN Manager.'
         }
 
         with mail.record_messages() as outbox:
