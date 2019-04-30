@@ -5,9 +5,6 @@ page = Blueprint('page', __name__, template_folder='templates')
 
 @page.route('/')
 def home():
-    # from flask import abort
-    # abort(500)
-
     return render_template('page/home.html')
 
 
@@ -19,3 +16,8 @@ def terms():
 @page.route('/privacy')
 def privacy():
     return render_template('page/privacy.html')
+
+
+@page.route('/healthy')
+def healthy():
+    return ''

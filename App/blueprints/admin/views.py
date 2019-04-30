@@ -50,7 +50,7 @@ def users(page):
     order_values = '{0} {1}'.format(sort_by[0], sort_by[1])
 
     paginated_users = User.query \
-        .filter(User.search(request.args.get('q', f''))) \
+        .filter(User.search(request.args.get('q', text('')))) \
         .order_by(User.role.asc(), text(order_values)) \
         .paginate(page, 50, True)
 
@@ -92,7 +92,7 @@ def users_bulk_delete():
         ids = User.get_bulk_action_ids(request.form.get('scope'),
                                        request.form.getlist('bulk_ids'),
                                        omit_ids=[current_user.id],
-                                       query=request.args.get('q', ''))
+                                       query=request.args.get('q', text('')))
 
         delete_count = User.bulk_delete(ids)
 

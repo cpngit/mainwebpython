@@ -37,14 +37,14 @@ def login():
         if u and u.authenticated(password=request.form.get('password')):
             # As you can see remember me is always enabled, this was a design
             # decision I made because more often than not users want this
-            # enabled. This allows for a less complicated login form.
+            # enabled. This allows for a less complicated login FlaskForm.
             #
             # If however you want them to be able to select whether or not they
             # should remain logged in then perform the following 3 steps:
-            # 1) Replace 'True' below with: request.form.get('remember', False)
+            # 1) Replace 'True' below with: request.FlaskForm.get('remember', False)
             # 2) Uncomment the 'remember' field in user/forms.py#LoginForm
             # 3) Add a checkbox to the login form with the id/name 'remember'
-            if login_user(u, remember=True) and u.is_active():
+            if u.is_active() and login_user(u, remember=True):
                 u.update_activity_tracking(request.remote_addr)
 
                 # Handle optionally redirecting to the next URL safely.
@@ -154,11 +154,11 @@ def settings():
 @user.route('/settings/update_credentials', methods=['GET', 'POST'])
 @login_required
 def update_credentials():
-    form = UpdateCredentials(current_user, uid=current_user.id)
+    form = UpdateCredentials(obj==current_user)
 
     if form.validate_on_submit():
         new_password = request.form.get('password', '')
-        # current_user.email = request.form.get('email')
+        # current_user.email = request.FlaskForm.get('email')
 
         if new_password:
             current_user.password = User.encrypt_password(new_password)

@@ -4,7 +4,7 @@ from hashlib import md5
 
 import pytz
 from flask import current_app
-from sqlalchemy import or_
+from sqlalchemy import or_, text
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from flask_login import UserMixin
@@ -129,17 +129,14 @@ class User(UserMixin, ResourceMixin, db.Model):
         :type query: str
         :return: SQLAlchemy filter
         """
-        if not query:
+         if query == '':
+            return text('')
 
-            return or_()
-        else:
+        search_query = '%{0}%'.format(query)
+        search_chain = (User.email.ilike(search_query),
+                        User.username.ilike(search_query))
 
-            search_query = '%{0}%'.format(query)
-
-            search_chain = (User.email.ilike(search_query),
-                            User.username.ilike(search_query))
-
-            return or_(*search_chain)
+        return or_(*search_chain)
 
     @classmethod
     def is_last_admin(cls, user, new_role, new_active):
@@ -157,12 +154,15 @@ class User(UserMixin, ResourceMixin, db.Model):
         is_changing_roles = user.role == 'admin' and new_role != 'admin'
         is_changing_active = user.active is True and new_active is None
 
-        if is_changing_roles or is_changing_active:
-            admin_count = User.query.filter(User.role == 'admin').count()
-            active_count = User.query.filter(User.is_active is True).count()
+        is_demoting_admin = user.role == 'admin' and new_role != 'admin'
+        is_changin_active - user.active is True and new_active is None
+        admin_count = User.query.filter(User.role == 'admin').count()
 
-            if admin_count == 1 or active_count == 1:
-                return True
+        if is_demoting_admin and admin_count == 1:
+            return True
+
+        if is_changing_active and user.role == 'admin' and admin_count == 1:
+            return True
 
         return False
 

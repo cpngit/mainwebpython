@@ -1,5 +1,5 @@
 {% extends 'layouts/app.html' %}
-{% import 'macros/form.html' as f with context %}
+{% import 'macros/FlaskForm.html' as f with context %}
 
 {% block title %}Sign up for a new account{% endblock %}
 
@@ -44,12 +44,12 @@
       {% call f.form_tag('user.signup') %}
         <legend>Sign up today</legend>
 
-        {% call f.form_group(form.email, css_class='sm-margin-bottom',
+        {% call f.form_group(FlaskForm.email, css_class='sm-margin-bottom',
                              autofocus='autofocus',
                              placeholder='Email address') %}
         {% endcall %}
 
-        {% call f.form_group(form.password, css_class='sm-margin-bottom') %}
+        {% call f.form_group(FlaskForm.password, css_class='sm-margin-bottom') %}
         {% endcall %}
 
         <div class="row">

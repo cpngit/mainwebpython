@@ -1,20 +1,19 @@
 from collections import OrderedDict
 
-from flask_wtf import Form
+from flask_wtf import FlaskForm
 from wtforms import SelectField, StringField, BooleanField
-# from wtforms.validators import ValidationError
 from wtforms.validators import DataRequired, Length, Optional, Regexp
-# from wtforms_components import Unique
+from wtforms_alchemy.validators import Unique
 
 from lib.util_wtforms import ModelForm, choices_from_dict
 from App.blueprints.user.models import User
 
 
-class SearchForm(Form):
+class SearchForm(FlaskForm):
     q = StringField('Search terms', [Optional(), Length(1, 256)])
 
 
-class BulkDeleteForm(Form):
+class BulkDeleteForm(FlaskForm):
     SCOPE = OrderedDict([
         ('all_selected_items', 'All selected items'),
         ('all_search_results', 'All search results')
@@ -28,6 +27,7 @@ class UserForm(ModelForm):
     username_message = 'Letters, numbers and underscores only please.'
 
     username = StringField(validators=[
+        Unique(User.username),
         Optional(),
         Length(1, 16),
         Regexp(r'^\w+$', message=username_message)
@@ -37,8 +37,4 @@ class UserForm(ModelForm):
                        choices=choices_from_dict(User.ROLE,
                                                  prepend_blank=False))
     active = BooleanField('Yes, allow this user to sign in')
-    # def validate_username(self, username):
-    #     """username validation."""
-    #     user = User.query.filter_by(username=username.data).first()
-    #     if user is not None:
-    #         raise ValidationError('Please use a different username.')
+

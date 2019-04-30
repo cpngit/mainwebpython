@@ -3,12 +3,12 @@ import logging
 
 from logging.handlers import SMTPHandler
 
-from werkzeug.contrib.fixers import ProxyFix
+from werkzeug.middleware.ProxyFix import ProxyFix
+from werkzeug.debug import DebuggedApplication
 from flask_login import current_user
 from flask import Flask, render_template, request
 from celery import Celery
 import base64
-# from itsdangerous import URLSafeTimedSerializer
 
 from App.blueprints.admin import admin
 from App.blueprints.page import page
@@ -63,10 +63,9 @@ def create_app(settings_override=None):
     :param settings_override: Override settings
     :return: Flask app
     """
-    app = Flask(__name__, instance_relative_config=True)
+   app = Flask(__name__, static_folder='../public', static_url_path='')
 
     app.config.from_object('config.settings')
-    app.config.from_pyfile('settings.py', silent=True)
 
     if settings_override:
         app.config.update(settings_override)
@@ -83,6 +82,9 @@ def create_app(settings_override=None):
     extensions(app)
     authentication(app, User)
     locale(app)
+
+    if debug:
+        app.wsgi_app = DebuggedApplication(app.wsgi_app)
 
     return app
 
@@ -119,30 +121,30 @@ def authentication(app, user_model):
     def load_user(uid):
         return user_model.query.get(uid)
 
-    @login_manager.request_loader
-    def load_user_from_request(request):
+    # @login_manager.request_loader
+    # def load_user_from_request(request):
 
-        # first, try to login using the api_key url arg
-        api_key = request.args.get('api_key')
-        if api_key:
-            user = User.query.filter_by(api_key=api_key).first()
-            if user:
-                return user
+    #     # first, try to login using the api_key url arg
+    #     api_key = request.args.get('api_key')
+    #     if api_key:
+    #         user = User.query.filter_by(api_key=api_key).first()
+    #         if user:
+    #             return user
 
-        # next, try to login using Basic Auth
-        api_key = request.headers.get('Authorization')
-        if api_key:
-            api_key = api_key.replace('Basic ', '', 1)
-            try:
-                api_key = base64.b64decode(api_key)
-            except TypeError:
-                pass
-            user = User.query.filter_by(api_key=api_key).first()
-            if user:
-                return user
+    #     # next, try to login using Basic Auth
+    #     api_key = request.headers.get('Authorization')
+    #     if api_key:
+    #         api_key = api_key.replace('Basic ', '', 1)
+    #         try:
+    #             api_key = base64.b64decode(api_key)
+    #         except TypeError:
+    #             pass
+    #         user = User.query.filter_by(api_key=api_key).first()
+    #         if user:
+    #             return user
 
-        # finally, return None if both methods did not login the user
-        return None
+    #     # finally, return None if both methods did not login the user
+    #     return None
 
 
 def locale(app):
@@ -152,13 +154,14 @@ def locale(app):
     :param app: Flask application instance
     :return: str
     """
-    @babel.localeselector
-    def get_locale():
-        if current_user.is_authenticated:
-            return current_user.locale
+    if babel.locale_selector_func is None:
+        @babel.localeselector
+        def get_locale():
+            if current_user.is_authenticated:
+                return current_user.locale
 
-        accept_languages = app.config.get('LANGUAGES').keys()
-        return request.accept_languages.best_match(accept_languages)
+            accept_languages = app.config.get('LANGUAGES').keys()
+            return request.accept_languages.best_match(accept_languages)
 
 
 def middleware(app):

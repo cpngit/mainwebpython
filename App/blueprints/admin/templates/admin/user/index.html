@@ -1,6 +1,6 @@
 {% extends 'layouts/app.html' %}
 {% import 'macros/items.html' as items %}
-{% import 'macros/form.html' as f with context %}
+{% import 'macros/FlaskForm.html' as f with context %}
 {% import 'macros/user.html' as account %}
 
 {% block title %}Admin - Users / List{% endblock %}
@@ -40,7 +40,7 @@
             </th>
             <th id="bulk_actions" colspan="4">
               <div class="form-inline">
-                {{ f.field(bulk_form.scope, inline=True) }}
+                {{ f.field(bulk_FlaskForm.scope, inline=True) }}
                   <button type="submit"
                           class="btn btn-danger btn-sm">
                     Delete items
