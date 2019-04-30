@@ -46,6 +46,7 @@ def seed():
 
     :return: User instance
     """
+
     if User.find_by_identity(app.config['SEED_ADMIN_EMAIL']) is not None:
         return None
 

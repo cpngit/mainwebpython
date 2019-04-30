@@ -11,11 +11,11 @@ questions or concerns.{% endblock %}
       {% call f.form_tag('contact.index') %}
         <legend>We're here to answer your questions</legend>
 
-        {% call f.form_group(FlaskForm.email, css_class='margin-bottom',
+        {% call f.form_group(form.email, css_class='margin-bottom',
                              placeholder='E-mail address') %}
         {% endcall %}
 
-        {% call f.form_group(FlaskForm.message, css_class='margin-bottom',
+        {% call f.form_group(form.message, css_class='margin-bottom',
                              placeholder='The more we know, the easier it will be to help you',
                              rows='12') %}
         {% endcall %}

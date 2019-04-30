@@ -17,7 +17,7 @@ SERVER_NAME = os.getenv('SERVER_NAME',
 
 # SQLAlchemy.
 pg_user = os.getenv('POSTGRES_USER', 'App')
-pg_pass = os.getenv('POSTGRES_PASSWORD', 'password')
+pg_pass = os.getenv('POSTGRES_PASSWORD', '@pEreira6')
 pg_host = os.getenv('POSTGRES_HOST', 'postgres')
 pg_port = os.getenv('POSTGRES_PORT', '5432')
 pg_db = os.getenv('POSTGRES_DB', pg_user)
@@ -33,16 +33,6 @@ CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_REDIS_MAX_CONNECTIONS = 5
-CELERYBEAT_SCHEDULE = {
-    'mark-soon-to-expire-credit-cards': {
-        'task': 'App.blueprints.billing.tasks.mark_old_credit_cards',
-        'schedule': crontab(hour=0, minute=0)
-    },
-    'expire-old-coupons': {
-        'task': 'App.blueprints.billing.tasks.expire_old_coupons',
-        'schedule': crontab(hour=0, minute=1)
-    },
-}
 
 # Flask-Mail.
 MAIL_SERVER = os.getenv('MAIL_SERVER', 'smtp.gmail.com')
@@ -60,11 +50,6 @@ LANGUAGES = {
     'es': 'Spanish'
 }
 BABEL_DEFAULT_LOCALE = 'en'
-
-# SQLAlchemy.
-db_uri = 'postgresql://App:devpassword@postgres:5432/App'
-SQLALCHEMY_DATABASE_URI = db_uri
-SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 # Rate limiting.
 RATELIMIT_STORAGE_URL = CELERY_BROKER_URL

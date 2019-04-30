@@ -12,5 +12,5 @@ CELERY_RESULT_BACKEND = 'redis://:amuchmoresecurepassword@redis:6379/0'
 db_uri = 'postgresql://App:themostsecurepasswordevercreated@postgres:5432/App'
 SQLALCHEMY_DATABASE_URI = db_uri
 
-SEED_ADMIN_EMAIL = 'cassiopereira.nunes@gmail.com'
-SEED_ADMIN_PASSWORD = '@101118grad962'
+SEED_ADMIN_EMAIL = 'dev@local.host'
+SEED_ADMIN_PASSWORD = 'password'

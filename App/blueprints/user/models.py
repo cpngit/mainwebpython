@@ -60,8 +60,6 @@ class User(UserMixin, ResourceMixin, db.Model):
         :type identity: str
         :return: User instance
         """
-        # current_app.logger.debug('{0} has tried to login'.format(identity))
-
         return User.query.filter(
           (User.email == identity) | (User.username == identity)).first()
 
