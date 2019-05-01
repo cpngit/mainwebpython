@@ -11,6 +11,8 @@ from sqlalchemy import text
 from App.blueprints.admin.models import Dashboard
 from App.blueprints.user.decorators import role_required
 from App.blueprints.user.models import User
+from App.blueprints.coman.models import Coman
+
 from App.blueprints.admin.forms import (
     SearchForm,
     BulkDeleteForm,
@@ -102,3 +104,42 @@ def users_bulk_delete():
         flash('No users were deleted, something went wrong.', 'error')
 
     return redirect(url_for('admin.users'))
+
+@admin.route('/coman', defaults={'page': 1})
+@admin.route('/coman/page/<int:page>')
+def coman(page):
+    search_form = SearchForm()
+    bulk_form = BulkDeleteForm()
+
+    sort_by = Coman.sort_by(request.args.get('sort', 'created_on'),
+                           request.args.get('direction', 'desc'))
+    order_values = '{0} {1}'.format(sort_by[0], sort_by[1])
+
+    paginated_comans = Coman.query \
+        .filter(Coman.search(request.args.get('q', text('')))) \
+        .order_by(Coman.name.asc(), text(order_values)) \
+        .paginate(page, 25, True)
+
+    return render_template('admin/coman/index.html',
+                           form=search_form, bulk_form=bulk_form,
+                           coman=paginated_comans)
+
+
+@admin.route('/coman/bulk_delete', methods=['POST'])
+def coman_bulk_delete():
+    form = BulkDeleteForm()
+
+    if form.validate_on_submit():
+        ids = Coman.get_bulk_action_ids(request.form.get('scope'),
+                                       request.form.getlist('bulk_ids'),
+                                       omit_ids=[current_user.id],
+                                       query=request.args.get('q', text('')))
+
+        delete_count = Coman.bulk_delete(ids)
+
+        flash('{0} coman(s) were scheduled to be deleted.'.format(delete_count),
+              'success')
+    else:
+        flash('No coman were deleted, something went wrong.', 'error')
+
+    return redirect(url_for('admin.coman'))

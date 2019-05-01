@@ -63,3 +63,6 @@ ANALYTICS_GOOGLE_UA = os.getenv('ANALYTICS_GOOGLE_UA', None)
 SEED_ADMIN_EMAIL = os.getenv('SEED_ADMIN_EMAIL', 'dev@local.host')
 SEED_ADMIN_PASSWORD = os.getenv('SEED_ADMIN_PASSWORD', 'password')
 REMEMBER_COOKIE_DURATION = timedelta(days=90)
+
+# Flask debug toolbas
+DEBUG_TB_INTERCEPT_REDIRECTS = False

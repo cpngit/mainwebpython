@@ -8,6 +8,7 @@ from faker import Faker
 from App.app import create_app
 from App.extensions import db
 from App.blueprints.user.models import User
+from App.blueprints.coman.models import Coman
 
 # Create an app context for the database connection.
 app = create_app()
@@ -150,5 +151,89 @@ def all(ctx):
     return None
 
 
+@click.command()
+def comans():
+     """
+     Generate fake comans.
+     """
+     random_emails = []
+     data = []
+
+     click.echo('Working...')
+
+    # Ensure we get about 100 unique random emails.
+     for i in range(0, 99):
+         random_emails.append(fake.email())
+
+     random_emails.append(app.config['SEED_ADMIN_EMAIL'])
+     random_emails = list(set(random_emails))
+
+     while True:
+         if len(random_emails) == 0:
+             break
+
+         fake_datetimeCreate = fake.date_time_between(
+             start_date='-2y', end_date='now').strftime('%s')
+
+         created_on = datetime.utcfromtimestamp(
+             float(fake_datetimeCreate)).strftime('%Y-%m-%dT%H:%M:%S Z')
+
+         fake_datetimeUpdated = fake.date_time_between(
+         start_date='-1y', end_date='now').strftime('%s')
+
+         updated_on = datetime.utcfromtimestamp(
+            float(fake_datetimeUpdated)).strftime('%Y-%m-%dT%H:%M:%S Z')
+
+         random_percent = random.random()
+
+         if random_percent >= 0.05:
+             nda = gfsi = organic = kosherCert = halalCert = True
+             gmoCert = usadInspect = glutenFreeCert = realChocolate  = True
+         else:
+             nda = gfsi = organic = kosherCert = halalCert = False
+             gmoCert = usadInspect = glutenFreeCert = realChocolate = False
+
+         email = random_emails.pop()
+
+         random_percent = random.random()
+
+         if random_percent >= 0.5:
+             random_trail = str(int(round((random.random() * 1000))))
+             name = fake.company() + ' ' + random_trail
+         else:
+             random_trail = str(int(round((random.random() * 2000))))
+             name = fake.company() + ' ' + random_trail
+
+         params = {
+             'created_on': created_on,
+             'updated_on': updated_on,
+             'nda': nda,
+             'email': email,
+             'name': name,
+             'state': 'MI',
+             'gfsi': gfsi,
+             'organic': organic,
+             'kosherCert': kosherCert,
+             'halalCert': halalCert,
+             'gmoCert': gmoCert,
+             'usadInspect': usadInspect,
+             'glutenFreeCert': glutenFreeCert,
+             'realChocolate': realChocolate,
+             'address' : '580 Foutain Ave., Brooklyn',
+             'city' : 'Lumberton',
+             'zip' : int(11368),
+             'contact' : 'Donald',
+             'contactPosition' : 'President',
+             'cellphone' : '718-271-8228',
+             'directphone' : '718-272-4242',
+             'website' : 'www.azpharmaceutical.com',
+             'notes' : fake.text()
+            }
+
+         data.append(params)
+
+     return _bulk_insert(Coman, data, 'comans')
+
+cli.add_command(comans)
 cli.add_command(users)
 cli.add_command(all)

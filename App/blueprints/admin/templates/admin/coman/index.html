@@ -1,0 +1,95 @@
+{% extends 'layouts/app.html' %}
+{% import 'macros/items.html' as items %}
+{% import 'macros/form.html' as f with context %}
+
+{% block title %}COMAN -  Manager / List{% endblock %}
+
+{% block body %}
+  {{ f.search('admin.coman') }}
+
+  {% if coman.total == 0 %}
+    <h3>No results found</h3>
+    {% if request.args.get('q') %}
+      <p>Try limiting or removing your search terms.</p>
+    {% else %}
+      <p>There are no record present.</p>
+    {% endif %}
+  {% else %}
+    {% call f.form_tag('admin.coman_bulk_delete') %}
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>
+              <label for="select_all"></label>
+              <input id="select_all" name="select_all" type="checkbox">
+            </th>
+            <th class="col-header">
+              {{ items.sort('created_on', 'Date Added') }}
+            </th>
+            <th class="col-header">
+              {{ items.sort('updated_on', 'Last Updated') }}
+            </th>
+            <th class="col-header">
+              {{ items.sort('name','Co-Manufacturer') }}
+            </th>
+            <th class="col-header">
+              {{ items.sort('ingredients','Ingredients') }}
+            </th>
+            <th class="col-header">
+              {{ items.sort('address', 'Address') }}
+            </th>
+            <th class="col-header">
+              {{ items.sort('contact', 'Contact') }}
+            </th>
+            <th class="col-header">
+              {{ items.sort('cellphone', 'Phone') }}
+            </th>
+            <th class="col-header">
+              {{ items.sort('email', 'Email/WebSite') }}
+            </th>
+            <th id="bulk_actions" colspan="4">
+              <div class="form-inline">
+                {{ f.field(bulk_form.scope, inline=True) }}
+                  <button type="submit"
+                          class="btn btn-danger btn-sm">
+                    Delete items
+                  </button>
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for coman in coman.items %}
+          <tr>
+            <td>
+              <label for="bulk_ids"></label>
+              <input class="checkbox-item" id="bulk_ids" name="bulk_ids"
+                     type="checkbox" value="{{ coman.id }}">
+            </td>
+            <td>
+              <time class="from-now"
+              data-datetime="{{ coman.created_on }}">
+                {{ coman.created_on }}
+              </time>
+            </td>
+            <td>
+              <time class="from-now"
+              data-datetime="{{ coman.updated_on }}">
+                {{ coman.updated_on }}
+              </time>
+            </td>
+            <td>{{ coman.name }} </td>
+            <td>{{ coman.ingredients }}</td>
+            <td>{{ coman.address }} {{ coman.city + ' / ' + coman.state }} </td>
+            <td>{{ coman.contact }} <p>{{ coman.contactPosition }}</p></td>
+            <td>{{ coman.cellphone }} <p>{{ coman.directphone }}</p></td>
+            <td>{{ coman.email }} <p>{{coman.website }}</p></td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    {% endcall %}
+
+    {{ items.paginate(coman) }}
+  {% endif %}
+{% endblock %}

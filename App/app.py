@@ -15,6 +15,8 @@ from App.blueprints.page import page
 from App.blueprints.contact import contact
 from App.blueprints.user import user
 from App.blueprints.user.models import User
+
+
 from App.extensions import (
     debug_toolbar,
     mail,
@@ -79,6 +81,7 @@ def create_app(settings_override=None):
     app.register_blueprint(page)
     app.register_blueprint(contact)
     app.register_blueprint(user)
+    # app.register_blueprint(coman)
     extensions(app)
     authentication(app, User)
     locale(app)
